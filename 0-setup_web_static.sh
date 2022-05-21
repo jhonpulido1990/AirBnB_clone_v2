@@ -1,29 +1,25 @@
 #!/usr/bin/env bash
-# Configure your Nginx server
+# Configure your Nginx server to have a custom 404 page that contains the string Ceci n'est pas une page.
 
 if [ ! -x /usr/sbin/nginx ];
 then
-    sudo apt-get -y update
-    sudo apt-get -y install nginx
-    sudo ufw allow  'Nginx HTTP' #on port 80
-    sudo service nginx restart
+    apt-get -y update
+    apt-get -y install nginx
+    ufw allow  'Nginx HTTP' #on port 80
+    service nginx restart
 else
 
-    sudo service nginx restart
+    service nginx restart
 fi
-sudo mkdir -p data/web_static/releases/test
-sudo touch  data/web_static/releases/test/index.html
+mkdir -p /data/web_static/releases/test
 echo "<html>
   <head>
   </head>
   <body>
     Holberton School
   </body>
-</html>" >> data/web_static/releases/test/index.html
-sudo mkdir -p data/web_static/current
-
-sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-
-chown -R ubuntu:ubuntu data
-sudo sed -i "5i rewrite \tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;/\n\t}" /etc/nginx/sites-available/default
+</html>" >> /data/web_static/releases/test/index.htm
+ln -sf /data/web_static/releases/test /data/web_static/current
+chown -R ubuntu:ubuntu /data
+sudo sed -i "/listen 80 default_serve/a location /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
 sudo service nginx restart
