@@ -72,5 +72,5 @@ class DBStorage:
         self.__session = ScopSession()
 
     def close(self):
-        """close seccion"""
+        """call remove() method on the private session attribute"""
         self.__session.close()
