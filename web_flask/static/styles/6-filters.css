@@ -63,7 +63,7 @@ h2{
     display: block;
 }
 .locations:hover .popover{
-    visibility: visible;
+    overflow-y: scroll;
     opacity: 1;
 }
 .amenities:hover .popover{
